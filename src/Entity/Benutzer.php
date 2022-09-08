@@ -49,6 +49,12 @@ class Benutzer
      */
     private $item;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Kst::class, inversedBy="benutzer")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $kst;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -145,6 +151,18 @@ class Benutzer
                 $item->setBenutzer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getKst(): ?Kst
+    {
+        return $this->kst;
+    }
+
+    public function setKst(?Kst $kst): self
+    {
+        $this->kst = $kst;
 
         return $this;
     }
