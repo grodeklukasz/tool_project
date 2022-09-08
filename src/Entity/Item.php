@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ItemRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +54,16 @@ class Item
      * @ORM\JoinColumn(nullable=false)
      */
     private $benutzer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Standort::class, mappedBy="item")
+     */
+    private $standord;
+
+    public function __construct()
+    {
+        $this->standord = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +150,36 @@ class Item
     public function setBenutzer(?Benutzer $benutzer): self
     {
         $this->benutzer = $benutzer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Standort>
+     */
+    public function getStandord(): Collection
+    {
+        return $this->standord;
+    }
+
+    public function addStandord(Standort $standord): self
+    {
+        if (!$this->standord->contains($standord)) {
+            $this->standord[] = $standord;
+            $standord->setItem($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStandord(Standort $standord): self
+    {
+        if ($this->standord->removeElement($standord)) {
+            // set the owning side to null (unless already changed)
+            if ($standord->getItem() === $this) {
+                $standord->setItem(null);
+            }
+        }
 
         return $this;
     }

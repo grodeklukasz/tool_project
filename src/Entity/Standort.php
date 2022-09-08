@@ -32,6 +32,12 @@ class Standort
      */
     private $raum;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="standord")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $item;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -69,6 +75,18 @@ class Standort
     public function setRaum(string $raum): self
     {
         $this->raum = $raum;
+
+        return $this;
+    }
+
+    public function getItem(): ?Item
+    {
+        return $this->item;
+    }
+
+    public function setItem(?Item $item): self
+    {
+        $this->item = $item;
 
         return $this;
     }
