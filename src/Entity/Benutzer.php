@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BenutzerRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -41,6 +43,16 @@ class Benutzer
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $festnetznummer;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Item::class, mappedBy="benutzer")
+     */
+    private $item;
+
+    public function __construct()
+    {
+        $this->item = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +115,36 @@ class Benutzer
     public function setFestnetznummer(?string $festnetznummer): self
     {
         $this->festnetznummer = $festnetznummer;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Item>
+     */
+    public function getItem(): Collection
+    {
+        return $this->item;
+    }
+
+    public function addItem(Item $item): self
+    {
+        if (!$this->item->contains($item)) {
+            $this->item[] = $item;
+            $item->setBenutzer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeItem(Item $item): self
+    {
+        if ($this->item->removeElement($item)) {
+            // set the owning side to null (unless already changed)
+            if ($item->getBenutzer() === $this) {
+                $item->setBenutzer(null);
+            }
+        }
 
         return $this;
     }

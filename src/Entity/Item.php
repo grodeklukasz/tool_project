@@ -47,6 +47,12 @@ class Item
      */
     private $bemerkung;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Benutzer::class, inversedBy="item")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $benutzer;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +126,18 @@ class Item
     public function setBemerkung(string $bemerkung): self
     {
         $this->bemerkung = $bemerkung;
+
+        return $this;
+    }
+
+    public function getBenutzer(): ?Benutzer
+    {
+        return $this->benutzer;
+    }
+
+    public function setBenutzer(?Benutzer $benutzer): self
+    {
+        $this->benutzer = $benutzer;
 
         return $this;
     }
