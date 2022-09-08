@@ -60,6 +60,12 @@ class Item
      */
     private $standord;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Hersteller::class, inversedBy="item")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $hersteller;
+
     public function __construct()
     {
         $this->standord = new ArrayCollection();
@@ -180,6 +186,18 @@ class Item
                 $standord->setItem(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHersteller(): ?Hersteller
+    {
+        return $this->hersteller;
+    }
+
+    public function setHersteller(?Hersteller $hersteller): self
+    {
+        $this->hersteller = $hersteller;
 
         return $this;
     }
