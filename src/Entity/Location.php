@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\StandortRepository;
+use App\Repository\LocationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=StandortRepository::class)
+ * @ORM\Entity(repositoryClass=LocationRepository::class)
  */
-class Standort
+class Location
 {
     /**
      * @ORM\Id
@@ -20,7 +20,7 @@ class Standort
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $standortname;
+    private $locationname;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -30,32 +30,31 @@ class Standort
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $raum;
+    private $room;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Item::class, inversedBy="standord")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
-    private $item;
+    private $abteilung;
 
     public function __toString()
     {
-        return $this->standortname . " " . $this->ort . " " . $this->raum;
+        return $this->locationname . " " . $this->ort . " " . $this->room;
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStandortname(): ?string
+    public function getLocationname(): ?string
     {
-        return $this->standortname;
+        return $this->locationname;
     }
 
-    public function setStandortname(string $standortname): self
+    public function setLocationname(string $locationname): self
     {
-        $this->standortname = $standortname;
+        $this->locationname = $locationname;
 
         return $this;
     }
@@ -72,26 +71,26 @@ class Standort
         return $this;
     }
 
-    public function getRaum(): ?string
+    public function getRoom(): ?string
     {
-        return $this->raum;
+        return $this->room;
     }
 
-    public function setRaum(string $raum): self
+    public function setRoom(string $room): self
     {
-        $this->raum = $raum;
+        $this->room = $room;
 
         return $this;
     }
 
-    public function getItem(): ?Item
+    public function getAbteilung(): ?string
     {
-        return $this->item;
+        return $this->abteilung;
     }
 
-    public function setItem(?Item $item): self
+    public function setAbteilung(string $abteilung): self
     {
-        $this->item = $item;
+        $this->abteilung = $abteilung;
 
         return $this;
     }

@@ -34,6 +34,11 @@ class Hersteller
         $this->item = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->Companyname;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

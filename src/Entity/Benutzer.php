@@ -60,6 +60,11 @@ class Benutzer
         $this->item = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return $this->nachname . ', ' . $this->vorname . ' [' . $this->kst . ']';
+    }
+
     public function getId(): ?int
     {
         return $this->id;

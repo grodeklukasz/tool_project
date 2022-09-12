@@ -58,7 +58,7 @@ class Item
     /**
      * @ORM\OneToMany(targetEntity=Standort::class, mappedBy="item")
      */
-    private $standord;
+    private $standort;
 
     /**
      * @ORM\ManyToOne(targetEntity=Hersteller::class, inversedBy="item")
@@ -66,9 +66,15 @@ class Item
      */
     private $hersteller;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Location::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $location;
+
     public function __construct()
     {
-        $this->standord = new ArrayCollection();
+        $this->standort = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -163,27 +169,27 @@ class Item
     /**
      * @return Collection<int, Standort>
      */
-    public function getStandord(): Collection
+    public function getStandort(): Collection
     {
-        return $this->standord;
+        return $this->standort;
     }
 
-    public function addStandord(Standort $standord): self
+    public function addstandort(Standort $standort): self
     {
-        if (!$this->standord->contains($standord)) {
-            $this->standord[] = $standord;
-            $standord->setItem($this);
+        if (!$this->standort->contains($standort)) {
+            $this->standort[] = $standort;
+            $standort->setItem($this);
         }
 
         return $this;
     }
 
-    public function removeStandord(Standort $standord): self
+    public function removestandort(Standort $standort): self
     {
-        if ($this->standord->removeElement($standord)) {
+        if ($this->standort->removeElement($standort)) {
             // set the owning side to null (unless already changed)
-            if ($standord->getItem() === $this) {
-                $standord->setItem(null);
+            if ($standort->getItem() === $this) {
+                $standort->setItem(null);
             }
         }
 
@@ -198,6 +204,18 @@ class Item
     public function setHersteller(?Hersteller $hersteller): self
     {
         $this->hersteller = $hersteller;
+
+        return $this;
+    }
+
+    public function getLocation(): ?Location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?Location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

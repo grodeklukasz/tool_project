@@ -6,7 +6,7 @@ use App\Entity\Item;
 use App\Entity\Benutzer;
 use App\Entity\Hersteller;
 use App\Entity\Kst;
-use App\Entity\Standort;
+use App\Entity\Location;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -39,6 +39,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Benutzer','fas fa-user', Benutzer::class);
         yield MenuItem::linkToCrud('Hersteller', 'fas fa-building', Hersteller::class);
         yield MenuItem::linkToCrud('KST', 'fas fa-money-bill', Kst::class);
-        yield MenuItem::linkToCrud('Standort', 'fas fa-map-marker-alt', Standort::class);
+        yield MenuItem::linkToCrud('Standort', 'fas fa-map-marker-alt', Location::class);
     }
 }
