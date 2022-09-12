@@ -34,7 +34,6 @@ class ItemCrudController extends AbstractCrudController
         foreach($status as $s){
             $arrayStatus[$s->getStatus()]=$s->getStatus();
         }
-        //$arrayStatus = ['neues Gerät'=>'neues Gerät','gebrauchtes Gerät'=>'gebrauchtes Gerät','geschrottet'=>'geschrottet'];
         $this->allTypes = $arrayTypes;              
         $this->allStatus = $arrayStatus;
                     
@@ -56,7 +55,7 @@ class ItemCrudController extends AbstractCrudController
     {
         return $filters 
             ->add(EntityFilter::new('hersteller'))
-            ->add(EntityFilter::new('standort'))
+            ->add(EntityFilter::new('location'))
             ->add(EntityFilter::new('benutzer'))
             ->add(ChoiceFilter::new('type')->setChoices($this->allTypes))
             ->add(ChoiceFilter::new('status')->setChoices($this->allStatus))
@@ -71,7 +70,6 @@ class ItemCrudController extends AbstractCrudController
       yield ChoiceField::new('Type')->setChoices($this->allTypes)->setRequired(True);
       yield TextField::new('Model')->setRequired(True);
       yield ChoiceField::new('Status')
-      //->setChoices(['neues Gerät'=>'neues Gerät','gebrauchtes Gerät'=>'gebrauchtes Gerät','geschrottet'=>'geschrottet'])
       ->setChoices($this->allStatus)
       ->setRequired(True);
       yield TextField::new('Seriennummer')->setRequired(True);
