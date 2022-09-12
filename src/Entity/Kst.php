@@ -38,7 +38,10 @@ class Kst
     {
         $this->benutzer = new ArrayCollection();
     }
-
+    public function __toString()
+    {
+        return $this->kstnummer . " - " . $this->abteilung;
+    }
     public function getId(): ?int
     {
         return $this->id;
