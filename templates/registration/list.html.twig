@@ -1,0 +1,53 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{# Let\'s remove/empty the header #}
+
+{% block content_header_wrapper %} {% endblock content_header_wrapper %}
+
+{# The main page content block #}
+{% block main %}
+<article class="content">
+    <div class="example-wrapper">
+        <article class="content">
+            <section class="content-header">
+                <div class="content-header-title">
+
+                    <h1 class="title">Users</h1>
+
+                </div>
+                <div class="page-actions">
+                    <div class="global-actions">
+                        
+                    </div>
+                </div>
+            </section>
+            <section id="main" class="content-body">
+                <table class="table datagrid">
+                    <thead>
+                        <tr>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Username (Email)</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span></span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td class=" text-left field-text">{{ user.id }}</td>    
+                            <td class=" text-left field-text">{{ user.email }}</td>   
+                            <td class="action action-as-dropdown">
+                            <div class="dropdown dropdown-actions">
+                               
+                            </div>
+                            </td> 
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </article>
+    </div>
+</article>
+
+{% endblock %}
+{% block content_footer_wrapper %} {% endblock content_footer_wrapper %}
