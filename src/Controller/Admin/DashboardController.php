@@ -11,6 +11,7 @@ use App\Entity\Type;
 use App\Entity\ItemStatus;
 use App\Entity\Admin;
 use App\Entity\Workstation;
+use App\Entity\HddTypes;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -47,6 +48,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Standorte', 'fas fa-map-marker-alt', Location::class);
         yield MenuItem::linkToCrud('Types', 'fa fa-files-o', Type::class);
         yield MenuItem::linkToCrud('Status (Item)', 'fa fa-files-o', ItemStatus::class);
+        yield MenuItem::linkToCrud('Hdd Types', 'fa fa-files-o', HddTypes::class);
         
     }
 }
