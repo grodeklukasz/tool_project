@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LocationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class Location
      * @ORM\Column(type="string", length=255)
      */
     private $abteilung;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Workstation::class, mappedBy="location")
+     */
+    private $workstations;
+
+    public function __construct()
+    {
+        $this->workstations = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -91,6 +103,36 @@ class Location
     public function setAbteilung(string $abteilung): self
     {
         $this->abteilung = $abteilung;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Workstation>
+     */
+    public function getWorkstations(): Collection
+    {
+        return $this->workstations;
+    }
+
+    public function addWorkstation(Workstation $workstation): self
+    {
+        if (!$this->workstations->contains($workstation)) {
+            $this->workstations[] = $workstation;
+            $workstation->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkstation(Workstation $workstation): self
+    {
+        if ($this->workstations->removeElement($workstation)) {
+            // set the owning side to null (unless already changed)
+            if ($workstation->getLocation() === $this) {
+                $workstation->setLocation(null);
+            }
+        }
 
         return $this;
     }

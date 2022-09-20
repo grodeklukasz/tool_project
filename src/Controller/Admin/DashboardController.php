@@ -10,6 +10,7 @@ use App\Entity\Location;
 use App\Entity\Type;
 use App\Entity\ItemStatus;
 use App\Entity\Admin;
+use App\Entity\Workstation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -39,6 +40,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', 'app_home');
         yield MenuItem::linkToCrud('Items','fa fa-laptop', Item::class);
+        yield MenuItem::linkToCrud('Workstations', 'fa fa-desktop', Workstation::class);
         yield MenuItem::linkToCrud('Kunden','fas fa-user', Benutzer::class);
         yield MenuItem::linkToCrud('Hersteller', 'fas fa-building', Hersteller::class);
         yield MenuItem::linkToCrud('KST', 'fas fa-money-bill', Kst::class);

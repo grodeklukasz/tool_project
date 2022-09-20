@@ -55,9 +55,15 @@ class Benutzer
      */
     private $kst;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Workstation::class, mappedBy="benutzer")
+     */
+    private $workstations;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
+        $this->workstations = new ArrayCollection();
     }
 
     public function __toString()
@@ -168,6 +174,36 @@ class Benutzer
     public function setKst(?Kst $kst): self
     {
         $this->kst = $kst;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Workstation>
+     */
+    public function getWorkstations(): Collection
+    {
+        return $this->workstations;
+    }
+
+    public function addWorkstation(Workstation $workstation): self
+    {
+        if (!$this->workstations->contains($workstation)) {
+            $this->workstations[] = $workstation;
+            $workstation->setBenutzer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkstation(Workstation $workstation): self
+    {
+        if ($this->workstations->removeElement($workstation)) {
+            // set the owning side to null (unless already changed)
+            if ($workstation->getBenutzer() === $this) {
+                $workstation->setBenutzer(null);
+            }
+        }
 
         return $this;
     }

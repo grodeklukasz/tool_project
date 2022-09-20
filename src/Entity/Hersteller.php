@@ -29,9 +29,15 @@ class Hersteller
      */
     private $item;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Workstation::class, mappedBy="producer")
+     */
+    private $workstations;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
+        $this->workstations = new ArrayCollection();
     }
 
     public function __toString()
@@ -80,6 +86,36 @@ class Hersteller
             // set the owning side to null (unless already changed)
             if ($item->getHersteller() === $this) {
                 $item->setHersteller(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Workstation>
+     */
+    public function getWorkstations(): Collection
+    {
+        return $this->workstations;
+    }
+
+    public function addWorkstation(Workstation $workstation): self
+    {
+        if (!$this->workstations->contains($workstation)) {
+            $this->workstations[] = $workstation;
+            $workstation->setProducer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWorkstation(Workstation $workstation): self
+    {
+        if ($this->workstations->removeElement($workstation)) {
+            // set the owning side to null (unless already changed)
+            if ($workstation->getProducer() === $this) {
+                $workstation->setProducer(null);
             }
         }
 
