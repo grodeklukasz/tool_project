@@ -44,8 +44,8 @@ class WorkstationCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud 
     {
         return $crud
-            ->setEntityLabelInSingular('Item')
-            ->setEntityLabelInPlural('Items')
+            ->setEntityLabelInSingular('Workstation')
+            ->setEntityLabelInPlural('Workstations')
             ->setSearchFields(['inventarnummer','seriennummer','model'])
             ->setDefaultSort(['inventarnummer'=>'DESC']);
     }

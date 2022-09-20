@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\TextFilter;
 
 class BenutzerCrudController extends AbstractCrudController
 {
@@ -24,11 +25,13 @@ class BenutzerCrudController extends AbstractCrudController
         return $crud
             ->setEntityLabelInSingular('Benutzer Item')
             ->setEntityLabelInPlural('Benutzer Items')
-            ->setDefaultSort(['createdAt'=>'DESC']);
+            ->setDefaultSort(['nachname'=>'DESC']);
     }
     public function configureFilters(Filters $filters): Filters 
     {
-        return $filters->add(EntityFilter::new('kst'));
+        return $filters
+        ->add(EntityFilter::new('kst'))
+        ->add(TextFilter::new('nachname'));
     }
 
     public function configureActions(Actions $actions): Actions 
