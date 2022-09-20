@@ -47,7 +47,8 @@ class WorkstationCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Workstation')
             ->setEntityLabelInPlural('Workstations')
             ->setSearchFields(['inventarnummer','seriennummer','model'])
-            ->setDefaultSort(['inventarnummer'=>'DESC']);
+            ->setDefaultSort(['inventarnummer'=>'DESC'])
+            ->setPaginatorPageSize(21);
     }
 
     public function configureFilters(Filters $filters): Filters 

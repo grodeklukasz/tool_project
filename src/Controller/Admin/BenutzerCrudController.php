@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Benutzer;
+use App\Entity\Workstation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -36,8 +37,19 @@ class BenutzerCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions 
     {
+        $viewItems = Action::new('viewItems','All Items', 'fa fa-files-o')
+            ->linkToRoute('app_user', 
+                function(Benutzer $benutzer):array
+                {
+                    return [
+                        'userid' => $benutzer->getId(),
+                    ];
+                }
+        );
+
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->add(Crud::PAGE_DETAIL, $viewItems)
             ->disable(Action::DELETE);
     }
     
@@ -49,6 +61,7 @@ class BenutzerCrudController extends AbstractCrudController
         yield TextField::new('Mobiltelefon');
         yield TextField::new('Mail')->setRequired(True);
         yield TextField::new('Festnetznummer');
+        
     }
     
 }

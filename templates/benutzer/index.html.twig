@@ -1,0 +1,69 @@
+{% extends '@!EasyAdmin/layout.html.twig' %}
+
+{# Let\'s remove/empty the header #}
+
+{% block content_header_wrapper %} {% endblock content_header_wrapper %}
+
+{# The main page content block #}
+{% block main %}
+<article class="content">
+    <div class="example-wrapper">
+        <article class="content">
+            <section class="content-header">
+                <div class="content-header-title">
+
+                    <h1 class="title">Alle Geräte  </h1>
+                    <h5>
+                        {{ benutzer.getKST() }}
+                        {{ benutzer.getNachname() }}, {{ benutzer.getVorname() }} 
+                        - Email: {{ benutzer.getMail() }} 
+                        
+                    </h5>
+
+                </div>
+                <div class="page-actions">
+                    <div class="global-actions">
+                        
+                    </div>
+                </div>
+            </section>
+            <section id="main" class="content-body">
+                <h5>Workstations</h5>
+                <table class="table datagrid">
+                    <thead>
+                        <tr>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Computername</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Betriebsystem</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Processor</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>RAM</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>HDD</span></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for workstation in allWorkstations %}
+                        <tr>
+                            <td class=" text-left field-text">{{ workstation.id }}</td>    
+                            <td class=" text-left field-text">{{ workstation.inventarnummer }}</td>   
+                            <td class=" text-left field-text">{{ workstation.model }}</td>   
+                            <td class=" text-left field-text">{{ workstation.seriennummer }}</td>   
+                            <td class=" text-left field-text">{{ workstation.computername }}</td>   
+                            <td class=" text-left field-text">{{ workstation.os }}</td>   
+                            <td class=" text-left field-text">{{ workstation.processor }}</td>   
+                            <td class=" text-left field-text">{{ workstation.ram }}</td>   
+                            <td class=" text-left field-text">{{ workstation.hdd1 }}</td>   
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </article>
+    </div>
+</article>
+
+{% endblock %}
+{% block content_footer_wrapper %} {% endblock content_footer_wrapper %}

@@ -27,7 +27,7 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
-        $url = $routeBuilder->setController(ItemCrudController::class)->generateUrl();
+        $url = $routeBuilder->setController(WorkstationCrudController::class)->generateUrl();
         return $this->redirect($url);
     }
 
@@ -40,12 +40,15 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', 'app_home');
+        yield MenuItem::section();
         yield MenuItem::linkToCrud('Workstations', 'fa fa-desktop', Workstation::class);
         yield MenuItem::linkToCrud('Laptops','fa fa-laptop', Item::class);
+        yield MenuItem::section();
         yield MenuItem::linkToCrud('Kunden','fas fa-user', Benutzer::class);
         yield MenuItem::linkToCrud('Hersteller', 'fas fa-building', Hersteller::class);
         yield MenuItem::linkToCrud('KST', 'fas fa-money-bill', Kst::class);
         yield MenuItem::linkToCrud('Standorte', 'fas fa-map-marker-alt', Location::class);
+        yield MenuItem::section('settings');
         yield MenuItem::linkToCrud('Types', 'fa fa-files-o', Type::class);
         yield MenuItem::linkToCrud('Status (Item)', 'fa fa-files-o', ItemStatus::class);
         yield MenuItem::linkToCrud('Hdd Types', 'fa fa-files-o', HddTypes::class);

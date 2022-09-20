@@ -17,4 +17,13 @@ class HomeController extends AbstractController
             'controller_name' => 'Tool Project 2.0',
         ]);
     }
+    /**
+     * @Route("/allItems/{userid}", name="app_user_allItems")
+     */
+    public function allItemsByUser(String $userid)
+    {
+        return $this->render('home/index.html.twig', [
+            'controller_name' => 'Tool Project 2.0' . $userid,
+        ]);
+    }
 }
