@@ -65,11 +65,17 @@ class Benutzer
      */
     private $laptops;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Handy::class, mappedBy="benutzer")
+     */
+    private $handies;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
         $this->workstations = new ArrayCollection();
         $this->laptops = new ArrayCollection();
+        $this->handies = new ArrayCollection();
     }
 
     public function __toString()
@@ -238,6 +244,36 @@ class Benutzer
             // set the owning side to null (unless already changed)
             if ($laptop->getBenutzer() === $this) {
                 $laptop->setBenutzer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Handy>
+     */
+    public function getHandies(): Collection
+    {
+        return $this->handies;
+    }
+
+    public function addHandy(Handy $handy): self
+    {
+        if (!$this->handies->contains($handy)) {
+            $this->handies[] = $handy;
+            $handy->setBenutzer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHandy(Handy $handy): self
+    {
+        if ($this->handies->removeElement($handy)) {
+            // set the owning side to null (unless already changed)
+            if ($handy->getBenutzer() === $this) {
+                $handy->setBenutzer(null);
             }
         }
 
