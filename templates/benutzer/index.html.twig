@@ -28,6 +28,9 @@
                 </div>
             </section>
             <section id="main" class="content-body">
+
+            {% if(allWorkstations) %}
+
                 <h5>Workstations</h5>
                 <table class="table datagrid">
                     <thead>
@@ -60,6 +63,45 @@
                         {% endfor %}
                     </tbody>
                 </table>
+
+            {% endif %}
+            
+            {% if(allLaptops) %}
+
+                <h5>Laptops</h5>
+                <table class="table datagrid">
+                    <thead>
+                        <tr>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Computername</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Betriebsystem</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Processor</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>RAM</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>HDD</span></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for laptop in allLaptops %}
+                        <tr>
+                            <td class=" text-left field-text">{{ laptop.id }}</td>    
+                            <td class=" text-left field-text">{{ laptop.inventarnummer }}</td>   
+                            <td class=" text-left field-text">{{ laptop.model }}</td>   
+                            <td class=" text-left field-text">{{ laptop.seriennummer }}</td>   
+                            <td class=" text-left field-text">{{ laptop.computername }}</td>   
+                            <td class=" text-left field-text">{{ laptop.os }}</td>   
+                            <td class=" text-left field-text">{{ laptop.processor }}</td>   
+                            <td class=" text-left field-text">{{ laptop.ram }}</td>   
+                            <td class=" text-left field-text">{{ laptop.hdd1 }}</td>   
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
             </section>
         </article>
     </div>
