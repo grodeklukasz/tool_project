@@ -44,12 +44,18 @@ class Hersteller
      */
     private $handies;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Printer::class, mappedBy="producer")
+     */
+    private $printers;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
         $this->workstations = new ArrayCollection();
         $this->laptops = new ArrayCollection();
         $this->handies = new ArrayCollection();
+        $this->printers = new ArrayCollection();
     }
 
     public function __toString()
@@ -188,6 +194,36 @@ class Hersteller
             // set the owning side to null (unless already changed)
             if ($handy->getProducer() === $this) {
                 $handy->setProducer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Printer>
+     */
+    public function getPrinters(): Collection
+    {
+        return $this->printers;
+    }
+
+    public function addPrinter(Printer $printer): self
+    {
+        if (!$this->printers->contains($printer)) {
+            $this->printers[] = $printer;
+            $printer->setProducer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrinter(Printer $printer): self
+    {
+        if ($this->printers->removeElement($printer)) {
+            // set the owning side to null (unless already changed)
+            if ($printer->getProducer() === $this) {
+                $printer->setProducer(null);
             }
         }
 
