@@ -13,6 +13,7 @@ use App\Entity\Admin;
 use App\Entity\Workstation;
 use App\Entity\HddTypes;
 use App\Entity\Laptop;
+use App\Entity\Handy;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -44,6 +45,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section();
         yield MenuItem::linkToCrud('Workstations', 'fa fa-desktop', Workstation::class);
         yield MenuItem::linkToCrud('Laptops','fa fa-laptop', Laptop::class);
+        yield MenuItem::linkToCrud('Handys','fa fa-mobile', Handy::class);
         yield MenuItem::section();
         yield MenuItem::linkToCrud('Kunden','fas fa-user', Benutzer::class);
         yield MenuItem::linkToCrud('Hersteller', 'fas fa-building', Hersteller::class);

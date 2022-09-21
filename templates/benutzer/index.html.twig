@@ -102,6 +102,36 @@
                 </table>
             {% endif %}
 
+            {% if(allHandy) %}
+                <h5>Handy</h5>
+                <table class="table datagrid">
+                    <thead>
+                        <tr>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>IMEI 1</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>IMEI 2</span></th>
+                            
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for handy in allHandy %}
+                        <tr>
+                            <td class=" text-left field-text">{{ handy.id }}</td>    
+                            <td class=" text-left field-text">{{ handy.inventarnummer }}</td>   
+                            <td class=" text-left field-text">{{ handy.model }}</td>   
+                            <td class=" text-left field-text">{{ handy.seriennummer }}</td>   
+                            <td class=" text-left field-text">{{ handy.imei1 }}</td>   
+                            <td class=" text-left field-text">{{ handy.imei2 }}</td>    
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
             </section>
         </article>
     </div>
