@@ -44,9 +44,15 @@ class Location
      */
     private $workstations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Laptop::class, mappedBy="location")
+     */
+    private $laptops;
+
     public function __construct()
     {
         $this->workstations = new ArrayCollection();
+        $this->laptops = new ArrayCollection();
     }
 
     public function __toString()
@@ -131,6 +137,36 @@ class Location
             // set the owning side to null (unless already changed)
             if ($workstation->getLocation() === $this) {
                 $workstation->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Laptop>
+     */
+    public function getLaptops(): Collection
+    {
+        return $this->laptops;
+    }
+
+    public function addLaptop(Laptop $laptop): self
+    {
+        if (!$this->laptops->contains($laptop)) {
+            $this->laptops[] = $laptop;
+            $laptop->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaptop(Laptop $laptop): self
+    {
+        if ($this->laptops->removeElement($laptop)) {
+            // set the owning side to null (unless already changed)
+            if ($laptop->getLocation() === $this) {
+                $laptop->setLocation(null);
             }
         }
 

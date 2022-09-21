@@ -34,10 +34,16 @@ class Hersteller
      */
     private $workstations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Laptop::class, mappedBy="producer")
+     */
+    private $laptops;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
         $this->workstations = new ArrayCollection();
+        $this->laptops = new ArrayCollection();
     }
 
     public function __toString()
@@ -116,6 +122,36 @@ class Hersteller
             // set the owning side to null (unless already changed)
             if ($workstation->getProducer() === $this) {
                 $workstation->setProducer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Laptop>
+     */
+    public function getLaptops(): Collection
+    {
+        return $this->laptops;
+    }
+
+    public function addLaptop(Laptop $laptop): self
+    {
+        if (!$this->laptops->contains($laptop)) {
+            $this->laptops[] = $laptop;
+            $laptop->setProducer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLaptop(Laptop $laptop): self
+    {
+        if ($this->laptops->removeElement($laptop)) {
+            // set the owning side to null (unless already changed)
+            if ($laptop->getProducer() === $this) {
+                $laptop->setProducer(null);
             }
         }
 

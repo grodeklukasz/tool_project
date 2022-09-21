@@ -25,13 +25,8 @@ class WorkstationCrudController extends AbstractCrudController
 
     public function __construct(ItemStatusRepository $itemStatusRepository, HddTypesRepository $hddTypesRepository) 
     {
-        $status = $itemStatusRepository->findAll();
-        $arrayStatus = array();
-        foreach($status as $s){
-            $arrayStatus[$s->getStatus()] = $s->getStatus();
-        }
-        $this->allStatus = $arrayStatus;
-
+        
+        $this->allStatus = $itemStatusRepository->getAllAsArray();
        
         $this->allHDDTypes = $hddTypesRepository->getAllAsArray();
 

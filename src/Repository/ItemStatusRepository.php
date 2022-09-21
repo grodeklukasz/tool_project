@@ -39,6 +39,18 @@ class ItemStatusRepository extends ServiceEntityRepository
         }
     }
 
+    public function getAllAsArray()
+    {
+        $status = $this->findAll();
+        $arrayStatus = array();
+        foreach($status as $s){
+            $arrayStatus[$s->getStatus()] = $s->getStatus();
+        }
+
+        return $arrayStatus;
+        
+    }
+
 //    /**
 //     * @return ItemStatus[] Returns an array of ItemStatus objects
 //     */
