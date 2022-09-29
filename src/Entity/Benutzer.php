@@ -70,12 +70,18 @@ class Benutzer
      */
     private $handies;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Printer::class, mappedBy="benutzer")
+     */
+    private $printers;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
         $this->workstations = new ArrayCollection();
         $this->laptops = new ArrayCollection();
         $this->handies = new ArrayCollection();
+        $this->printers = new ArrayCollection();
     }
 
     public function __toString()
@@ -274,6 +280,36 @@ class Benutzer
             // set the owning side to null (unless already changed)
             if ($handy->getBenutzer() === $this) {
                 $handy->setBenutzer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Printer>
+     */
+    public function getPrinters(): Collection
+    {
+        return $this->printers;
+    }
+
+    public function addPrinter(Printer $printer): self
+    {
+        if (!$this->printers->contains($printer)) {
+            $this->printers[] = $printer;
+            $printer->setBenutzer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrinter(Printer $printer): self
+    {
+        if ($this->printers->removeElement($printer)) {
+            // set the owning side to null (unless already changed)
+            if ($printer->getBenutzer() === $this) {
+                $printer->setBenutzer(null);
             }
         }
 

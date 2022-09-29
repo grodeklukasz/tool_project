@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\WorkstationRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=WorkstationRepository::class)
@@ -19,7 +20,9 @@ class Workstation
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Unique
      */
+
     private $inventarnummer;
 
     /**

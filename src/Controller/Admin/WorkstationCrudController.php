@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Service\OptionGenerator;
 use App\Entity\Workstation;
 use App\Repository\ItemStatusRepository;
 use App\Repository\HddTypesRepository;
@@ -23,12 +24,12 @@ class WorkstationCrudController extends AbstractCrudController
     private $allStatus;
     private $allHDDTypes;
 
-    public function __construct(ItemStatusRepository $itemStatusRepository, HddTypesRepository $hddTypesRepository) 
+    public function __construct(ItemStatusRepository $itemStatusRepository, HddTypesRepository $hddTypesRepository, OptionGenerator $optionGenerator) 
     {
         
-        $this->allStatus = $itemStatusRepository->getAllAsArray();
-       
-        $this->allHDDTypes = $hddTypesRepository->getAllAsArray();
+        $this->allHDDTypes = $optionGenerator->getAllAsArray($hddTypesRepository);
+
+        $this->allStatus = $optionGenerator->getAllAsArray($itemStatusRepository);
 
     }
     public static function getEntityFqcn(): string

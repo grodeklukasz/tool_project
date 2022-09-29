@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Laptop;
 use App\Repository\ItemStatusRepository;
 use App\Repository\HddTypesRepository;
+use App\Service\OptionGenerator;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -23,12 +24,12 @@ class LaptopCrudController extends AbstractCrudController
     private $allStatus;
     private $allHDDTypes;
 
-    public function __construct(ItemStatusRepository $itemStatusRepository, HddTypesRepository $hddTypesRepository)
+    public function __construct(ItemStatusRepository $itemStatusRepository, HddTypesRepository $hddTypesRepository, OptionGenerator $optionGenerator)
     {
 
-        $this->allStatus = $itemStatusRepository->getAllAsArray();
+        $this->allStatus = $optionGenerator->getAllAsArray($itemStatusRepository);
 
-        $this->allHDDTypes = $hddTypesRepository->getAllAsArray();
+        $this->allHDDTypes = $optionGenerator->getAllAsArray($hddTypesRepository);
 
 
     }

@@ -88,6 +88,18 @@ class Printer
      */
     private $note;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Benutzer::class, inversedBy="printers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $benutzer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Location::class, inversedBy="printers")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $location;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -257,6 +269,30 @@ class Printer
     public function setNote(string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getBenutzer(): ?benutzer
+    {
+        return $this->benutzer;
+    }
+
+    public function setBenutzer(?benutzer $benutzer): self
+    {
+        $this->benutzer = $benutzer;
+
+        return $this;
+    }
+
+    public function getLocation(): ?location
+    {
+        return $this->location;
+    }
+
+    public function setLocation(?location $location): self
+    {
+        $this->location = $location;
 
         return $this;
     }

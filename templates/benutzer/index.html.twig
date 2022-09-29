@@ -35,7 +35,6 @@
                 <table class="table datagrid">
                     <thead>
                         <tr>
-                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
@@ -49,8 +48,7 @@
                     </thead>
                     <tbody>
                         {% for workstation in allWorkstations %}
-                        <tr>
-                            <td class=" text-left field-text">{{ workstation.id }}</td>    
+                        <tr>   
                             <td class=" text-left field-text">{{ workstation.inventarnummer }}</td>   
                             <td class=" text-left field-text">{{ workstation.model }}</td>   
                             <td class=" text-left field-text">{{ workstation.seriennummer }}</td>   
@@ -72,7 +70,6 @@
                 <table class="table datagrid">
                     <thead>
                         <tr>
-                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
@@ -86,8 +83,7 @@
                     </thead>
                     <tbody>
                         {% for laptop in allLaptops %}
-                        <tr>
-                            <td class=" text-left field-text">{{ laptop.id }}</td>    
+                        <tr>  
                             <td class=" text-left field-text">{{ laptop.inventarnummer }}</td>   
                             <td class=" text-left field-text">{{ laptop.model }}</td>   
                             <td class=" text-left field-text">{{ laptop.seriennummer }}</td>   
@@ -107,7 +103,6 @@
                 <table class="table datagrid">
                     <thead>
                         <tr>
-                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Id</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
                             <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
@@ -126,6 +121,38 @@
                             <td class=" text-left field-text">{{ handy.seriennummer }}</td>   
                             <td class=" text-left field-text">{{ handy.imei1 }}</td>   
                             <td class=" text-left field-text">{{ handy.imei2 }}</td>    
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% if(allPrinters)%}
+                <h5>Drucker</h5>
+                <table class="table datagrid">
+                    <thead>
+                        <tr>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Model</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Seriennummer</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Duplex</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Netzwerk</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Kopieren</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Technik</span></th>
+                            <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Farbtone</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for printer in allPrinters %}
+                        <tr>
+                            <td class=" text-left field-text">{{ printer.inventarnummer }}</td>   
+                            <td class=" text-left field-text">{{ printer.model }}</td>   
+                            <td class=" text-left field-text">{{ printer.seriennummer }}</td>     
+                            <td class=" text-left field-text">{{ printer.duplex }}</td>     
+                            <td class=" text-left field-text">{{ printer.netzwerk }}</td>     
+                            <td class=" text-left field-text">{{ printer.Kopieren }}</td>     
+                            <td class=" text-left field-text">{{ printer.drucktechnik }}</td>     
+                            <td class=" text-left field-text">{{ printer.farbtone }}</td>     
                         </tr>
                         {% endfor %}
                     </tbody>
