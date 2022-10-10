@@ -59,12 +59,18 @@ class Location
      */
     private $printers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Monitor::class, mappedBy="location")
+     */
+    private $monitors;
+
     public function __construct()
     {
         $this->workstations = new ArrayCollection();
         $this->laptops = new ArrayCollection();
         $this->handies = new ArrayCollection();
         $this->printers = new ArrayCollection();
+        $this->monitors = new ArrayCollection();
     }
 
     public function __toString()
@@ -239,6 +245,36 @@ class Location
             // set the owning side to null (unless already changed)
             if ($printer->getLocation() === $this) {
                 $printer->setLocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Monitor>
+     */
+    public function getMonitors(): Collection
+    {
+        return $this->monitors;
+    }
+
+    public function addMonitor(Monitor $monitor): self
+    {
+        if (!$this->monitors->contains($monitor)) {
+            $this->monitors[] = $monitor;
+            $monitor->setLocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMonitor(Monitor $monitor): self
+    {
+        if ($this->monitors->removeElement($monitor)) {
+            // set the owning side to null (unless already changed)
+            if ($monitor->getLocation() === $this) {
+                $monitor->setLocation(null);
             }
         }
 

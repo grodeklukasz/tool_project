@@ -7,6 +7,7 @@ use App\Repository\WorkstationRepository;
 use App\Repository\LaptopRepository;
 use App\Repository\HandyRepository;
 use App\Repository\PrinterRepository;
+use App\Repository\MonitorRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +24,8 @@ class BenutzerController extends AbstractController
         LaptopRepository $laptopRepository, 
         BenutzerRepository $benutzerRepository,
         HandyRepository $handyRepository,
-        PrinterRepository $printerRepository
+        PrinterRepository $printerRepository,
+        MonitorRepository $monitorRepository
         )
     {
         $benutzer = $benutzerRepository->findOneBy(['id' => $userid]);
@@ -31,6 +33,7 @@ class BenutzerController extends AbstractController
         $allLaptops = $laptopRepository->findBy(['benutzer'=>$userid]);
         $allHandy = $handyRepository->findBy(['benutzer'=>$userid]);
         $allPrinters = $printerRepository->findBy(['benutzer'=>$userid]);
+        $allMonitors = $monitorRepository->findBy(['user'=>$userid]);
 
 
         return $this->render('benutzer/index.html.twig', [
@@ -39,6 +42,7 @@ class BenutzerController extends AbstractController
             'allLaptops' => $allLaptops,
             'allHandy' => $allHandy,
             'allPrinters' => $allPrinters,
+            'allMonitors' => $allMonitors
         ]);
     }
 }

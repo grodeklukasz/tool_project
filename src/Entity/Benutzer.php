@@ -75,6 +75,11 @@ class Benutzer
      */
     private $printers;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Monitor::class, mappedBy="user")
+     */
+    private $monitors;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -82,6 +87,7 @@ class Benutzer
         $this->laptops = new ArrayCollection();
         $this->handies = new ArrayCollection();
         $this->printers = new ArrayCollection();
+        $this->monitors = new ArrayCollection();
     }
 
     public function __toString()
@@ -310,6 +316,36 @@ class Benutzer
             // set the owning side to null (unless already changed)
             if ($printer->getBenutzer() === $this) {
                 $printer->setBenutzer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Monitor>
+     */
+    public function getMonitors(): Collection
+    {
+        return $this->monitors;
+    }
+
+    public function addMonitor(Monitor $monitor): self
+    {
+        if (!$this->monitors->contains($monitor)) {
+            $this->monitors[] = $monitor;
+            $monitor->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMonitor(Monitor $monitor): self
+    {
+        if ($this->monitors->removeElement($monitor)) {
+            // set the owning side to null (unless already changed)
+            if ($monitor->getUser() === $this) {
+                $monitor->setUser(null);
             }
         }
 
