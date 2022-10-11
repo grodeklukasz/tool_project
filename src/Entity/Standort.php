@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\StandortRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +39,16 @@ class Standort
      * @ORM\JoinColumn(nullable=false)
      */
     private $item;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Netzwerk::class, mappedBy="Standort")
+     */
+    private $netzwerks;
+
+    public function __construct()
+    {
+        $this->netzwerks = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -92,6 +104,36 @@ class Standort
     public function setItem(?Item $item): self
     {
         $this->item = $item;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Netzwerk>
+     */
+    public function getNetzwerks(): Collection
+    {
+        return $this->netzwerks;
+    }
+
+    public function addNetzwerk(Netzwerk $netzwerk): self
+    {
+        if (!$this->netzwerks->contains($netzwerk)) {
+            $this->netzwerks[] = $netzwerk;
+            $netzwerk->setStandort($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNetzwerk(Netzwerk $netzwerk): self
+    {
+        if ($this->netzwerks->removeElement($netzwerk)) {
+            // set the owning side to null (unless already changed)
+            if ($netzwerk->getStandort() === $this) {
+                $netzwerk->setStandort(null);
+            }
+        }
 
         return $this;
     }

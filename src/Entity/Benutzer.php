@@ -80,6 +80,11 @@ class Benutzer
      */
     private $monitors;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Netzwerk::class, mappedBy="user")
+     */
+    private $netzwerks;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -88,6 +93,7 @@ class Benutzer
         $this->handies = new ArrayCollection();
         $this->printers = new ArrayCollection();
         $this->monitors = new ArrayCollection();
+        $this->netzwerks = new ArrayCollection();
     }
 
     public function __toString()
@@ -346,6 +352,36 @@ class Benutzer
             // set the owning side to null (unless already changed)
             if ($monitor->getUser() === $this) {
                 $monitor->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Netzwerk>
+     */
+    public function getNetzwerks(): Collection
+    {
+        return $this->netzwerks;
+    }
+
+    public function addNetzwerk(Netzwerk $netzwerk): self
+    {
+        if (!$this->netzwerks->contains($netzwerk)) {
+            $this->netzwerks[] = $netzwerk;
+            $netzwerk->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNetzwerk(Netzwerk $netzwerk): self
+    {
+        if ($this->netzwerks->removeElement($netzwerk)) {
+            // set the owning side to null (unless already changed)
+            if ($netzwerk->getUser() === $this) {
+                $netzwerk->setUser(null);
             }
         }
 

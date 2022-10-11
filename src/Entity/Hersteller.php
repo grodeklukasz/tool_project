@@ -54,6 +54,11 @@ class Hersteller
      */
     private $monitors;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Netzwerk::class, mappedBy="hersteller")
+     */
+    private $netzwerks;
+
     public function __construct()
     {
         $this->item = new ArrayCollection();
@@ -62,6 +67,7 @@ class Hersteller
         $this->handies = new ArrayCollection();
         $this->printers = new ArrayCollection();
         $this->monitors = new ArrayCollection();
+        $this->netzwerks = new ArrayCollection();
     }
 
     public function __toString()
@@ -260,6 +266,36 @@ class Hersteller
             // set the owning side to null (unless already changed)
             if ($monitor->getHersteller() === $this) {
                 $monitor->setHersteller(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Netzwerk>
+     */
+    public function getNetzwerks(): Collection
+    {
+        return $this->netzwerks;
+    }
+
+    public function addNetzwerk(Netzwerk $netzwerk): self
+    {
+        if (!$this->netzwerks->contains($netzwerk)) {
+            $this->netzwerks[] = $netzwerk;
+            $netzwerk->setHersteller($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNetzwerk(Netzwerk $netzwerk): self
+    {
+        if ($this->netzwerks->removeElement($netzwerk)) {
+            // set the owning side to null (unless already changed)
+            if ($netzwerk->getHersteller() === $this) {
+                $netzwerk->setHersteller(null);
             }
         }
 
