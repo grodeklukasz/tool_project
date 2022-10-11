@@ -208,10 +208,39 @@
 
             {% endif %}
 
+            {% if(allNetzwerk) %}
+                <br>
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Netzwerk Items</h5>
+                        <table class="table datagrid">
+                            <thead>
+                                <tr>
+                                    <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Inventarnummer</span></th>
+                                    <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Hersteller</span></th>
+                                    <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Modell</span></th>
+                                    <th class="field-virtual header-for-field-text text-left" dir="ltr"><span>Type</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for netzwerk in allNetzwerk %}
+                                <tr>
+                                    <td>{{ netzwerk.inventarnummer }}</td>
+                                    <td>{{ netzwerk.hersteller }}</td>
+                                    <td>{{ netzwerk.model }}</td>
+                                    <td>{{ netzwerk.type }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+
             </section>
         </article>
     </div>
 </article>
-
+<br><br>
 {% endblock %}
 {% block content_footer_wrapper %} {% endblock content_footer_wrapper %}

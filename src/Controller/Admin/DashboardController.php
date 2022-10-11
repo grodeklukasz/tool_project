@@ -39,13 +39,14 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Tool')
-            ;
+            ->setTitle('WJW DB Items');
+            
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', 'app_home');
+        //yield MenuItem::linkToRoute('Back to the website', 'fas fa-home', 'app_home');
+        yield MenuItem::linkToCrud('Start', 'fas fa-home', Workstation::class);
         yield MenuItem::section();
         yield MenuItem::linkToCrud('Workstations', 'fa fa-desktop', Workstation::class);
         yield MenuItem::linkToCrud('Laptops','fa fa-laptop', Laptop::class);
@@ -59,7 +60,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('KST', 'fas fa-money-bill', Kst::class);
         yield MenuItem::linkToCrud('Standorte', 'fas fa-map-marker-alt', Location::class);
         yield MenuItem::section('settings');
-        yield MenuItem::linkToCrud('Types', 'fa fa-files-o', Type::class);
         yield MenuItem::linkToCrud('Status (Item)', 'fa fa-files-o', ItemStatus::class);
         yield MenuItem::linkToCrud('Hdd Types', 'fa fa-files-o', HddTypes::class);
         
