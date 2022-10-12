@@ -35,7 +35,6 @@ class AdminCrudController extends AbstractCrudController
 
         return $actions
         ->disable(Action::NEW)
-        ->disable(Action::DELETE)
         ->disable(Action::EDIT)
         ;
     }

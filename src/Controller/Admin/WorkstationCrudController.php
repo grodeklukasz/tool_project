@@ -65,7 +65,7 @@ class WorkstationCrudController extends AbstractCrudController
     {
         yield FormField::addTab('Basic details');
         yield FormField::addPanel('Basic details')->setIcon('fa fa-desktop');
-        yield TextField::new('Inventarnummer')->setRequired(True);
+        yield TextField::new('inventarnummer')->setRequired(True);
         yield ChoiceField::new('Status')->setChoices($this->allStatus)->hideOnIndex()->setRequired(True);
         yield AssociationField::new('producer','Hersteller');
         yield TextField::new('model')->setRequired(True);
