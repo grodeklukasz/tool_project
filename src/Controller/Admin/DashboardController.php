@@ -55,13 +55,18 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Monitor','fa fa-television', Monitor::class);
         yield MenuItem::linkToCrud('Netzwerk','fa fa-server', Netzwerk::class);
         yield MenuItem::section();
-        yield MenuItem::linkToCrud('Kunden','fas fa-user', Benutzer::class);
+        yield MenuItem::linkToCrud('Benutzer','fas fa-users', Benutzer::class);
         yield MenuItem::linkToCrud('Hersteller', 'fas fa-building', Hersteller::class);
         yield MenuItem::linkToCrud('KST', 'fas fa-money-bill', Kst::class);
         yield MenuItem::linkToCrud('Standorte', 'fas fa-map-marker-alt', Location::class);
         yield MenuItem::section('settings');
         yield MenuItem::linkToCrud('Status (Item)', 'fa fa-files-o', ItemStatus::class);
         yield MenuItem::linkToCrud('Hdd Types', 'fa fa-files-o', HddTypes::class);
+        yield MenuItem::section('------------------------');
+        yield MenuItem::linkToRoute('Add Admin','fas fa-user-plus','app_add_user');
+        yield MenuItem::linkToCrud('Admins','fas fa-users',Admin::class);
+        
+
         
     }
 }

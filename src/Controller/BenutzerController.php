@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Admin;
 use App\Repository\BenutzerRepository;
 use App\Repository\WorkstationRepository;
 use App\Repository\LaptopRepository;
@@ -10,8 +11,14 @@ use App\Repository\PrinterRepository;
 use App\Repository\MonitorRepository;
 use App\Repository\NetzwerkRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 class BenutzerController extends AbstractController
 {
@@ -47,6 +54,33 @@ class BenutzerController extends AbstractController
             'allPrinters' => $allPrinters,
             'allMonitors' => $allMonitors,
             'allNetzwerk' => $allNetzwerk,
+        ]);
+    }
+    /**
+     * @Route("/addNewAdmin", name="app_add_user")
+     */
+    public function addNewAdmin(Request $request, UserPasswordHasherInterface $passwordHasher) 
+    {
+        $admin = new Admin();
+
+        
+        $form = $this->createFormBuilder($admin)
+            ->add('Email', TextType::class)
+            ->add('Password', PasswordType::class)
+            ->add('create', SubmitType::class, ['label'=>'Create'])
+            ->getForm();
+        
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+
+            $admin = $form->getData();
+
+            return $this->redirectToRoute('admin');
+        }
+
+        return $this->renderForm('user/addNewAdmin.html.twig',[
+            'form' => $form,
         ]);
     }
 }
