@@ -10,6 +10,7 @@ use App\Repository\HandyRepository;
 use App\Repository\PrinterRepository;
 use App\Repository\MonitorRepository;
 use App\Repository\NetzwerkRepository;
+use App\Repository\AdminRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -61,8 +62,10 @@ class BenutzerController extends AbstractController
     /**
      * @Route("/addNewAdmin", name="app_add_user")
      */
-    public function addNewAdmin(Request $request, UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine) 
+    public function addNewAdmin(Request $request, UserPasswordHasherInterface $passwordHasher, ManagerRegistry $doctrine, AdminRepository $adminRepository) 
     {
+        $errorMsg = "";
+
         $admin = new Admin();
 
         $entityManager = $doctrine->getManager();
@@ -88,8 +91,74 @@ class BenutzerController extends AbstractController
 
             $data = $form->getData();
 
-            $admin->setEmail($data->getEmail());
+            $findAdmin = $adminRepository->findOneBy(['email'=>$data->getEmail()]);
 
+            if(!$findAdmin){
+
+                $admin->setEmail($data->getEmail());
+
+                $plaintextPassword = $data->getPassword();
+
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $data,
+                    $plaintextPassword
+                );
+
+                $admin->setPassword($hashedPassword);
+
+                $admin->setRoles(["ROLE_ADMIN"]);
+                
+                $entityManager->persist($admin);
+
+                $entityManager->flush();
+
+                return $this->redirectToRoute('admin');
+            
+            }else{
+                $errorMsg = "Die Email Adresse ist bereit besetzt";
+            }
+            
+           
+        }
+
+        return $this->renderForm('user/addNewAdmin.html.twig',[
+            'form' => $form,
+            'errorMsg' => $errorMsg
+        ]);
+    }
+    /**
+     * @Route("/editAdmin/{admin_id}", name="app_edit_admin")
+     */
+    public function editAdmin(int $admin_id, Request $request, UserPasswordHasherInterface $passwordHasher, AdminRepository $adminRepository, ManagerRegistry $doctrine){
+
+        $msg = "";
+
+        $adminUser = $adminRepository->findOneBy(['id' => $admin_id]);
+
+        $entityManager = $doctrine->getManager();
+
+        $form = $this->createFormBuilder($adminUser)
+        ->add('Email', TextType::class, [
+            'disabled'=>True,
+            'attr'=>['class'=>'form-control form-control-sm']
+        ])
+        ->add('Password', PasswordType::class,[
+            'required'=>true,
+            'attr'=>['class'=>'form-control form-control-sm']
+        ])
+        ->add('update', SubmitType::class,[
+            'attr'=>['class'=>'btn btn-warning']
+        ])
+        ->getForm();
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+
+            $data = $form->getData();
+        
+            $admin = $entityManager->getRepository(Admin::class)->find($data->getId());
+        
             $plaintextPassword = $data->getPassword();
 
             $hashedPassword = $passwordHasher->hashPassword(
@@ -99,17 +168,19 @@ class BenutzerController extends AbstractController
 
             $admin->setPassword($hashedPassword);
 
-            $admin->setRoles(["ROLE_ADMIN"]);
-            
-            $entityManager->persist($admin);
-
             $entityManager->flush();
-            
-            return $this->redirectToRoute('admin');
+
+            //return $this->redirectToRoute('admin');
+
+            $msg = "Benutzerkonto wurde aktualisiert";
+
         }
 
-        return $this->renderForm('user/addNewAdmin.html.twig',[
+        return $this->renderForm('user/editAdmin.html.twig',[
             'form' => $form,
+            'msg' => $msg,
         ]);
+
+
     }
 }

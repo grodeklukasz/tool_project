@@ -23,17 +23,19 @@ class AdminCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions 
     {
-        $addNewAdmin = Action::new('addNewAdmin', 'Add new', 'fa fa-user-plus')
-        ->linkToRoute('app_add_user',
-        function():array 
+        $addNewAdmin = Action::new('editAdmin', 'Edit', 'fa fa-user-circle-o')
+        ->linkToRoute('app_edit_admin',
+        function(Admin $admin):array 
         {
             return [
-                ''
+                'admin_id' => $admin->getId()
             ];
         }
         );
 
         return $actions
+        ->add(Crud::PAGE_INDEX, Action::DETAIL)
+        ->add(Crud::PAGE_DETAIL, $addNewAdmin)
         ->disable(Action::NEW)
         ->disable(Action::EDIT)
         ;
